@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import DepositModal from "./Components/DepositModal";
 
 function App() {
-  const { data: walletClient } = useWalletClient({});
   const { address } = useAccount();
 
   const [showDepositModal,setShowDepositModal] = useState<boolean|undefined>(false);
