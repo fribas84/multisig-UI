@@ -54,7 +54,7 @@ export default function Withdraws() {
             </Badge>
           </Table.Cell>
           <Table.Cell>
-          <Button color="failure">
+          <Button color="failure" className="hover:scale-110" disabled>
               Sign
             </Button>
           </Table.Cell>
@@ -81,7 +81,7 @@ export default function Withdraws() {
             </Badge>
           </Table.Cell>
           <Table.Cell>
-            <Button color="failure">
+            <Button color="failure" className="hover:scale-110">
               Sign
             </Button>
           </Table.Cell>

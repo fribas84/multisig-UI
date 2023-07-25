@@ -8,22 +8,23 @@ interface Props {
 }
 
 
-const Actions = ({setShowDepositModal,showDepositModal}:Props) => {
-  return (
-    <div className='flex mb-5 p-2 bg-white border-black-200 rounded shadow-2xl'>
-        
-        <Button color="success" className="mx-2"  onClick={() =>setShowDepositModal(true)}
-        >
-        Deposit
-      </Button>
-      <Button color="warning" className="mx-2">
-        Create Order
-      </Button>
-      <span className="ml-auto my-auto flex-row-reverse ">
-        Total Balance in Wallet: <span className='font-bold'>1000 eth</span>
-      </span>
-    </div>
-  )
+const Actions = ({ setShowDepositModal, showDepositModal }: Props) => {
+    return (
+        <div className='flex mb-5 p-2 bg-white border-black-200 rounded shadow-2xl'>
+            
+                <Button color="success" className="mx-2 hover:scale-110" onClick={() => setShowDepositModal(true)}
+                >
+                    Deposit
+                </Button>
+
+            <Button color="warning" className="mx-2 hover:scale-110">
+                Create Order
+            </Button>
+            <span className="ml-auto my-auto flex-row-reverse ">
+                Total Balance in Wallet: <span className='font-bold'>1000 eth</span>
+            </span>
+        </div>
+    )
 }
 
 export default Actions
