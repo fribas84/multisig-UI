@@ -12,31 +12,40 @@ import {
 } from 'wagmi'
 import { useEffect, useState } from "react";
 import DepositModal from "./Components/DepositModal";
+import WidthdrawModal from "./Components/WidthdrawModal";
 
 function App() {
   const { address } = useAccount();
 
-  const [showDepositModal,setShowDepositModal] = useState<boolean|undefined>(false);
+  const [showDepositModal, setShowDepositModal] = useState<boolean | undefined>(false);
+  const [showWidthdrawModal, setShowWithdrawModal] = useState<boolean | undefined>(false);
   return (
     <div className='container mx-auto my-5'>
       <Nav />
-  
-      <div className="m-5">
-      {address && <>
-        <Actions 
-        setShowDepositModal={setShowDepositModal}
-        showDepositModal={showDepositModal}/>
-        <Withdraws />
-        <DepositModal 
-        setShowDepositModal={setShowDepositModal}
-        showDepositModal={showDepositModal}/>
-        </>
-      }
-      </div>
-      </div>
- 
 
-    
+      <div className="m-5">
+        {address && <>
+          <Actions
+            setShowDepositModal={setShowDepositModal}
+            showDepositModal={showDepositModal}
+            setShowWithdrawModal={setShowWithdrawModal}
+            showWidthdrawModal={showWidthdrawModal} />
+          <Withdraws />
+          <DepositModal
+            setShowDepositModal={setShowDepositModal}
+            showDepositModal={showDepositModal} />
+          <WidthdrawModal
+            setShowWithdrawModal={setShowWithdrawModal}
+            showWidthdrawModal={showWidthdrawModal}
+
+          />
+        </>
+        }
+      </div>
+    </div>
+
+
+
 
   )
 }

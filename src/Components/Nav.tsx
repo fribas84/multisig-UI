@@ -7,11 +7,11 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const Nav = () => {
   return (
-    <div className="shadow-2xl m-5">
+    <div className="shadow-2xl m-5 rounded-md">
       <Navbar
         fluid
-        rounded
-        className='w-full'>
+
+        className='w-full rounded-md'>
         <Navbar.Brand>
 
           <span className="whitespace-nowrap text-xl font-semibold dark:text-white">

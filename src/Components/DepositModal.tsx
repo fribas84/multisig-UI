@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Checkbox, Label, Modal, TextInput, NumberInput } from 'flowbite-react';
+import { Button, Modal} from 'flowbite-react';
 import { useRef } from 'react';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
   showDepositModal: boolean | undefined
 }
 const DepositModal = ({ setShowDepositModal, showDepositModal }: Props) => {
-  const emailInputRef = useRef<HTMLInputElement>(null)
+  const amountInputRef = useRef<HTMLInputElement>(null)
 
   const handleSubmit = () => {
     console.log("handleSubmit")
@@ -20,7 +20,7 @@ const DepositModal = ({ setShowDepositModal, showDepositModal }: Props) => {
         size="md"
         popup
         onClose={() => setShowDepositModal(false)}
-        initialFocus={emailInputRef}
+        initialFocus={amountInputRef}
         dismissible 
       >
         <Modal.Header />
@@ -47,6 +47,7 @@ const DepositModal = ({ setShowDepositModal, showDepositModal }: Props) => {
                     className="border-2 p-2  placeholder-gray-400 rounded-md w-3/4"
                     type="number"
                     placeholder="amount to deposit"
+                    ref={amountInputRef}
 
                     min="0"
                     step="any"
@@ -57,19 +58,6 @@ const DepositModal = ({ setShowDepositModal, showDepositModal }: Props) => {
                 </div>
               </div>
               <Button color="success" className="w-full p-1"> Deposit</Button>
-              {/* <input
-                type="submit"
-                className="bg-teal-500 w-full p-3 text-white font-bold hover:bg-teal-700 cursor-pointer transition-all rounded-md"
-                value="Deposit"
-              /> */}
-              {/* <button
-                className="bg-red-500 w-full p-3 text-white  font-bold hover:bg-red-700 cursor-pointer transition-all rounded-md mt-3"
-                onClick={(e) => {
-                  e.preventDefault();
-
-                }}
-              >Cancel
-              </button> */}
               <Button color="failure" className="w-full p-1 mt-2" onClick={() => setShowDepositModal(false)}> Cancel</Button>
               <p className="font-bold mt-1 text-center"> Max will 99.99% of Wallet balance to leave some eth for gas.</p>
             </form>
