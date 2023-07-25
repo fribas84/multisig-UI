@@ -18,7 +18,7 @@ function App() {
 
   const [showDepositModal,setShowDepositModal] = useState<boolean|undefined>(false);
   return (
-    <div className='container mx-auto'>
+    <div className='container mx-auto my-5'>
       <Nav />
   
       <div className="m-5">

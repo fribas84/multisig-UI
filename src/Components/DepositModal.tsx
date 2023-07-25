@@ -1,59 +1,79 @@
 'use client';
 
-import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
-import {  useRef } from 'react';
+import { Button, Checkbox, Label, Modal, TextInput, NumberInput } from 'flowbite-react';
+import { useRef } from 'react';
 
 interface Props {
-    setShowDepositModal: React.Dispatch<React.SetStateAction<boolean | undefined>>;
-    showDepositModal: boolean | undefined
+  setShowDepositModal: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+  showDepositModal: boolean | undefined
 }
- const DepositModal = ({setShowDepositModal,showDepositModal}:Props) =>{
+const DepositModal = ({ setShowDepositModal, showDepositModal }: Props) => {
   const emailInputRef = useRef<HTMLInputElement>(null)
 
-
+  const handleSubmit = () => {
+    console.log("handleSubmit")
+  }
   return (
     <>
       <Modal
         show={showDepositModal}
         size="md"
         popup
-        onClose={() =>setShowDepositModal(false)}
+        onClose={() => setShowDepositModal(false)}
         initialFocus={emailInputRef}
+        dismissible 
       >
         <Modal.Header />
         <Modal.Body>
-          <div className="space-y-6">
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">Deposit eth!</h3>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="email" value="Your email" />
+          <div >
+            <h2 className="font-black text-3xl text-center mb-1">
+              Deposit Eth
+            </h2>
+
+            <form
+              onSubmit={handleSubmit}
+              className="m-2 bg-white shadow-xl rounded-lg py-10 px-5 mb-2"
+            >
+              <div className="mb-2">
+                <label
+                  htmlFor="depositAmount"
+                  className="block text-gray-700 font-bold"
+                >
+                  Amount:
+                </label>
+                <div className="flex">
+                  <input
+                    id="depositAmount"
+                    className="border-2 p-2  placeholder-gray-400 rounded-md w-3/4"
+                    type="number"
+                    placeholder="amount to deposit"
+
+                    min="0"
+                    step="any"
+
+                  />
+                  <Button color="warning" className="ml-2 w-1/4 p-1">
+                    Max</Button>
+                </div>
               </div>
-              <TextInput id="email" ref={emailInputRef} placeholder="name@company.com" required />
-            </div>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="password" value="Your password" />
-              </div>
-              <TextInput id="password" type="password" required />
-            </div>
-            <div className="flex justify-between">
-              <div className="flex items-center gap-2">
-                <Checkbox id="remember" />
-                <Label htmlFor="remember">Remember me</Label>
-              </div>
-              <a href="/modal" className="text-sm text-cyan-700 hover:underline dark:text-cyan-500">
-                Lost Password?
-              </a>
-            </div>
-            <div className="w-full">
-              <Button>Log in to your account</Button>
-            </div>
-            <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
-              Not registered?&nbsp;
-              <a href="/modal" className="text-cyan-700 hover:underline dark:text-cyan-500">
-                Create account
-              </a>
-            </div>
+              <Button color="success" className="w-full p-1"> Deposit</Button>
+              {/* <input
+                type="submit"
+                className="bg-teal-500 w-full p-3 text-white font-bold hover:bg-teal-700 cursor-pointer transition-all rounded-md"
+                value="Deposit"
+              /> */}
+              {/* <button
+                className="bg-red-500 w-full p-3 text-white  font-bold hover:bg-red-700 cursor-pointer transition-all rounded-md mt-3"
+                onClick={(e) => {
+                  e.preventDefault();
+
+                }}
+              >Cancel
+              </button> */}
+              <Button color="failure" className="w-full p-1 mt-2" onClick={() => setShowDepositModal(false)}> Cancel</Button>
+              <p className="font-bold mt-1 text-center"> Max will 99.99% of Wallet balance to leave some eth for gas.</p>
+            </form>
+
           </div>
         </Modal.Body>
       </Modal>
