@@ -7,11 +7,11 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const Nav = () => {
   return (
-    <div className="shadow-2xl m-5 flex">
+    <div className="shadow-2xl m-5">
       <Navbar
         fluid
         rounded
-      className='w-full'>
+        className='w-full'>
         <Navbar.Brand>
 
           <span className="whitespace-nowrap text-xl font-semibold dark:text-white">
@@ -22,7 +22,7 @@ const Nav = () => {
 
           <Navbar.Toggle />
         </div>
-        <Navbar.Collapse>
+        <Navbar.Collapse className='ml-auto flex-row-reverse'>
           <div>
             <ConnectButton label="Connect your wallet"
               accountStatus={{

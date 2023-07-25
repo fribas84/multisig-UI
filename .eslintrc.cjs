@@ -19,7 +19,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
    },
   plugins: ['react-refresh'],
-  rules: {
+  rules: {'@typescript-eslint/no-unsafe-assignment': 'off',
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },

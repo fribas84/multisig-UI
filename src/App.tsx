@@ -1,24 +1,43 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import Nav from "./Components/Nav";
+import Withdraws from "./Components/Withdraws"
+import Actions from "./Components/Actions";
 import {
   useWalletClient,
   usePrepareContractWrite,
   useContractWrite,
   useBalance,
-  useAccount
+  useAccount,
+  WalletClient
 } from 'wagmi'
+import { useEffect, useState } from "react";
+import DepositModal from "./Components/DepositModal";
 
 function App() {
   const { data: walletClient } = useWalletClient({});
-  console.log(walletClient)
+  const { address } = useAccount();
+
+  const [showDepositModal,setShowDepositModal] = useState<boolean|undefined>(false);
   return (
     <div className='container mx-auto'>
       <Nav />
-      {walletClient && <div className='m-5 bg-white border-black-200 rounded shadow-2xl'>
-        <p>Hello {walletClient?.account.address}</p>
-      </div>}
+  
+      <div className="m-5">
+      {address && <>
+        <Actions 
+        setShowDepositModal={setShowDepositModal}
+        showDepositModal={showDepositModal}/>
+        <Withdraws />
+        <DepositModal 
+        setShowDepositModal={setShowDepositModal}
+        showDepositModal={showDepositModal}/>
+        </>
+      }
+      </div>
+      </div>
+ 
 
-
-    </div>
+    
 
   )
 }
