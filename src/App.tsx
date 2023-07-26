@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+import { DarkThemeToggle, Flowbite } from 'flowbite-react';
+
 import Nav from "./Components/Nav";
 import Withdraws from "./Components/Withdraws"
 import Actions from "./Components/Actions";
@@ -20,9 +22,9 @@ function App() {
   const [showDepositModal, setShowDepositModal] = useState<boolean | undefined>(false);
   const [showWidthdrawModal, setShowWithdrawModal] = useState<boolean | undefined>(false);
   return (
+    <Flowbite>
     <div className='container mx-auto my-5'>
       <Nav />
-
       <div className="m-5">
         {address && <>
           <Actions
@@ -44,7 +46,7 @@ function App() {
       </div>
     </div>
 
-
+    </Flowbite>
 
 
   )

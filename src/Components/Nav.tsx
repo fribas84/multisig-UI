@@ -1,5 +1,5 @@
 'use client';
-import { Navbar } from 'flowbite-react';
+import { Navbar, DarkThemeToggle } from 'flowbite-react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 
@@ -23,7 +23,7 @@ const Nav = () => {
           <Navbar.Toggle />
         </div>
         <Navbar.Collapse className='ml-auto flex-row-reverse'>
-          <div>
+          <div className='flex'>
             <ConnectButton label="Connect your wallet"
               accountStatus={{
                 smallScreen: 'avatar',
@@ -34,6 +34,7 @@ const Nav = () => {
                 smallScreen: false,
                 largeScreen: true,
               }} />
+              <DarkThemeToggle className='ml-5'/>
           </div>
 
         </Navbar.Collapse>
