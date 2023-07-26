@@ -3,36 +3,44 @@
 import { Button, Modal } from 'flowbite-react';
 import { useRef, useState } from 'react';
 import { parseEther } from 'viem';
-import { useSignTypedData } from 'wagmi';
+import { useSignTypedData, useWaitForTransaction } from 'wagmi';
 import { WriteContractResult } from 'wagmi/actions';
+import { useMultiSigWalletGetBalance, useMultiSigWalletDeposit, usePrepareMultiSigWalletDeposit } from '../generated';
+
 
 interface Props {
   setShowDepositModal: React.Dispatch<React.SetStateAction<boolean | undefined>>;
   showDepositModal: boolean | undefined;
-  prepareDepositError: Error | null;
-  prepareDepositIsError: boolean;
-  returnDeposit: WriteContractResult | undefined;
-  triggerDeposit: () => void;
-  setDepositValue: React.Dispatch<React.SetStateAction<bigint>>
-
 }
 const DepositModal = ({
   setShowDepositModal,
   showDepositModal,
-  triggerDeposit,
-  setDepositValue }: Props) => {
+ }: Props) => {
+
   const amountInputRef = useRef<HTMLInputElement>(null)
   const [depositValueInt, setDepositValueInt] = useState<string>("0");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const {
+    config: depositConfig } = usePrepareMultiSigWalletDeposit({ value: parseEther(depositValueInt) });
+
+
+  const { data: returnDeposit, writeAsync: executeDeposit } = useMultiSigWalletDeposit(depositConfig);
+  const { isLoading: depositLoading, isSuccess: depositSuccess } = useWaitForTransaction({
+    hash: returnDeposit?.hash,
+  })
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("handleSubmit");
-    const value = parseInt(depositValueInt);
+    const value = parseEther(depositValueInt);
+    console.log("value: ", value);
     if (value > 0) {
-      setDepositValue(parseEther(depositValueInt));
-      triggerDeposit();
+      console.log("deposit Config:", depositConfig);
+      await executeDeposit?.();
+      setShowDepositModal(false);
+      setDepositValueInt("0");
+      console.log("return: ", returnDeposit)
     }
-    
   }
   return (
     <>
