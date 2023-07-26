@@ -22,8 +22,6 @@ const DepositModal = ({
 
   const {
     config: depositConfig } = usePrepareMultiSigWalletDeposit({ value: parseEther(depositValueInt) });
-
-
   const { data: returnDeposit, writeAsync: executeDeposit } = useMultiSigWalletDeposit(depositConfig);
   const { isLoading: depositLoading, isSuccess: depositSuccess } = useWaitForTransaction({
     hash: returnDeposit?.hash,
