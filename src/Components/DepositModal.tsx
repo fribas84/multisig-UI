@@ -1,17 +1,38 @@
 'use client';
 
-import { Button, Modal} from 'flowbite-react';
-import { useRef } from 'react';
+import { Button, Modal } from 'flowbite-react';
+import { useRef, useState } from 'react';
+import { parseEther } from 'viem';
+import { useSignTypedData } from 'wagmi';
+import { WriteContractResult } from 'wagmi/actions';
 
 interface Props {
   setShowDepositModal: React.Dispatch<React.SetStateAction<boolean | undefined>>;
-  showDepositModal: boolean | undefined
-}
-const DepositModal = ({ setShowDepositModal, showDepositModal }: Props) => {
-  const amountInputRef = useRef<HTMLInputElement>(null)
+  showDepositModal: boolean | undefined;
+  prepareDepositError: Error | null;
+  prepareDepositIsError: boolean;
+  returnDeposit: WriteContractResult | undefined;
+  triggerDeposit: () => void;
+  setDepositValue: React.Dispatch<React.SetStateAction<bigint>>
 
-  const handleSubmit = () => {
-    console.log("handleSubmit")
+}
+const DepositModal = ({
+  setShowDepositModal,
+  showDepositModal,
+  triggerDeposit,
+  setDepositValue }: Props) => {
+  const amountInputRef = useRef<HTMLInputElement>(null)
+  const [depositValueInt, setDepositValueInt] = useState<string>("0");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("handleSubmit");
+    const value = parseInt(depositValueInt);
+    if (value > 0) {
+      setDepositValue(parseEther(depositValueInt));
+      triggerDeposit();
+    }
+    
   }
   return (
     <>
@@ -19,9 +40,12 @@ const DepositModal = ({ setShowDepositModal, showDepositModal }: Props) => {
         show={showDepositModal}
         size="md"
         popup
-        onClose={() => setShowDepositModal(false)}
+        onClose={() => {
+          setDepositValueInt("0");
+          setShowDepositModal(false)
+        }}
         initialFocus={amountInputRef}
-        dismissible 
+        dismissible
       >
         <Modal.Header />
         <Modal.Body>
@@ -48,17 +72,28 @@ const DepositModal = ({ setShowDepositModal, showDepositModal }: Props) => {
                     type="number"
                     placeholder="amount to deposit"
                     ref={amountInputRef}
+                    value={depositValueInt}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setDepositValueInt(e.target.value) }}
 
                     min="0"
                     step="any"
 
                   />
-                  <Button color="warning" className="ml-2 w-1/4 p-1">
+                  <Button
+                    color="warning"
+                    className="ml-2 w-1/4 p-1">
                     Max</Button>
                 </div>
               </div>
-              <Button color="success" className="w-full p-1"> Deposit</Button>
-              <Button color="failure" className="w-full p-1 mt-2" onClick={() => setShowDepositModal(false)}> Cancel</Button>
+              <Button
+                color="success"
+                className="w-full p-1"
+                onClick={handleSubmit}> Deposit</Button>
+              <Button color="failure" className="w-full p-1 mt-2" onClick={(e: React.FormEvent<HTMLFormElement>) => {
+                e.preventDefault();
+                setDepositValueInt("0");
+                setShowDepositModal(false)
+              }}> Cancel</Button>
               <p className="font-bold mt-1 text-center"> Max will 99.99% of Wallet balance to leave some eth for gas.</p>
             </form>
 
