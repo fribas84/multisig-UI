@@ -1,4 +1,10 @@
 # MultiSig Wallet UI
-The porpuse of this o
 
-## 
+Just a common Multi Signature Wallet made with:
+- Vite
+- React 
+- TypeScript
+- Wagmi
+- Rainbow kit
+
+ 
