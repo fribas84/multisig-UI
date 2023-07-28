@@ -1,7 +1,7 @@
 'use client';
 
-import { Button, Modal } from 'flowbite-react';
-import { useRef, useState } from 'react';
+import { Button, Modal, Spinner } from 'flowbite-react';
+import { useEffect, useRef, useState } from 'react';
 import { parseEther } from 'viem';
 import { useSignTypedData, useWaitForTransaction } from 'wagmi';
 import { WriteContractResult } from 'wagmi/actions';
@@ -15,7 +15,7 @@ interface Props {
 const DepositModal = ({
   setShowDepositModal,
   showDepositModal,
- }: Props) => {
+}: Props) => {
 
   const amountInputRef = useRef<HTMLInputElement>(null)
   const [depositValueInt, setDepositValueInt] = useState<string>("0");
@@ -26,40 +26,55 @@ const DepositModal = ({
   const { isLoading: depositLoading, isSuccess: depositSuccess } = useWaitForTransaction({
     hash: returnDeposit?.hash,
   })
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("handleSubmit");
-    const value = parseEther(depositValueInt);
-    console.log("value: ", value);
-    if (value > 0) {
-      console.log("deposit Config:", depositConfig);
-      await executeDeposit?.();
-      setShowDepositModal(false);
-      setDepositValueInt("0");
-      console.log("return: ", returnDeposit)
+  console.log("isloading:", depositLoading);
+  console.log("iscomplte: ", depositSuccess);
+  useEffect(() => {
+    const clear = () => {
+      if (depositSuccess) {
+        setShowDepositModal(false);
+        setDepositValueInt("0");
+        console.log("return: ", returnDeposit)
+      }
     }
-  }
-  return (
-    <>
-      <Modal
-        show={showDepositModal}
-        size="md"
-        popup
-        onClose={() => {
-          setDepositValueInt("0");
-          setShowDepositModal(false)
-        }}
-        initialFocus={amountInputRef}
-        dismissible
-      >
-        <Modal.Header />
-        <Modal.Body>
-          <div >
-            <h2 className="font-black text-3xl text-center mb-1">
-              Deposit Eth
-            </h2>
+    clear();
+  }, [depositSuccess]);
 
+  console.log("return: ", returnDeposit);
+   
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  console.log("handleSubmit");
+  const value = parseEther(depositValueInt);
+  console.log("value: ", value);
+  if (value > 0) {
+    console.log("deposit Config:", depositConfig);
+    await executeDeposit?.();
+
+  }
+}
+return (
+  <>
+    <Modal
+      show={showDepositModal}
+      size="md"
+      popup
+      onClose={() => {
+        setDepositValueInt("0");
+        setShowDepositModal(false)
+      }}
+      initialFocus={amountInputRef}
+      dismissible
+    >
+      <Modal.Header />
+      <Modal.Body>
+        <div >
+          <h2 className="font-black text-3xl text-center mb-1">
+            Deposit Eth
+          </h2>
+
+          {
+            !depositLoading &&
             <form
               onSubmit={handleSubmit}
               className="m-2 bg-white shadow-xl rounded-lg py-10 px-5 mb-2"
@@ -102,14 +117,40 @@ const DepositModal = ({
               }}> Cancel</Button>
               <p className="font-bold mt-1 text-center"> Max will 99.99% of Wallet balance to leave some eth for gas.</p>
             </form>
+          }
+          {depositLoading &&
+            <div className='flex'>
+              <Spinner
+                aria-label="Transaction in progress"
+                size="xl"
+              />
+              <p>Transaction in progress...</p>
+              <a href={`https://etherscan.io/tx/${returnDeposit?.hash}`}>Etherscan</a>
+            </div>
+          }
+        </div>
+      </Modal.Body>
 
-          </div>
-        </Modal.Body>
-      </Modal>
-    </>
-  )
+    </Modal>
+  </>
+)
 }
 
+// <button disabled={!write || isLoading} onClick={() => write?.()}>
+// {isLoading ? 'Minting...' : 'Mint'}
+// </button>
+// {isSuccess && (
+// <div>
+//   Successfully minted your NFT!
+//   <div>
+//     <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+//   </div>
+// </div>
+// )}
+// {(isPrepareError || isError) && (
+// <div>Error: {(prepareError || error)?.message}</div>
+// )}
+// </div>
 
 
 export default DepositModal;
