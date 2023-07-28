@@ -11,18 +11,20 @@ import ErrorHandler from './ErrorHandler'
 interface Props {
   setShowDepositModal: React.Dispatch<React.SetStateAction<boolean | undefined>>;
   showDepositModal: boolean | undefined;
+  balance: string;
 }
 const DepositModal = ({
   setShowDepositModal,
   showDepositModal,
+  balance
 }: Props) => {
 
   const amountInputRef = useRef<HTMLInputElement>(null)
   const [depositValueInt, setDepositValueInt] = useState<string>("0");
-  const [showError, SetShowError] = useState<boolean>(false);
-  const [errorMsg, SetErrorMsg] = useState<string>("");
+  const [showError, setShowError] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string | undefined>("");
   const { config: depositConfig } = usePrepareMultiSigWalletDeposit({ value: parseEther(depositValueInt) });
-  const { data: returnDeposit, writeAsync: executeDeposit } = useMultiSigWalletDeposit(depositConfig);
+  const { data: returnDeposit, writeAsync: executeDeposit, error, isError } = useMultiSigWalletDeposit(depositConfig);
   const { isLoading: depositLoading, isSuccess: depositSuccess } = useWaitForTransaction({ hash: returnDeposit?.hash });
 
 
@@ -30,35 +32,58 @@ const DepositModal = ({
   useEffect(() => {
     const clear = () => {
       if (depositSuccess) {
-        setShowDepositModal(false);
         setDepositValueInt("0");
-        console.log("return: ", returnDeposit)
+        setShowError(false);
+        setShowDepositModal(false);
+
       }
     }
     clear();
   }, [depositSuccess]);
 
-  console.log("return: ", returnDeposit);
 
+  useEffect(() => {
+    const errorTx = () => {
+      if (isError) {
+        setShowError(true);
+        setErrorMsg(error?.message);
+      }
+    }
+    errorTx();
+  }, [isError]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("handleSubmit");
     const value = parseEther(depositValueInt);
-    console.log("value: ", value);
-    if (value > 0) {
-      console.log("deposit Config:", depositConfig);
-      await executeDeposit?.();
+    if ((value > 0) && parseInt(balance)<value) {
+      try {
+        setShowError(false);
+        await executeDeposit?.();
 
+      }
+      catch (e) {
+        setShowError(true);
+        if (typeof e === "string") {
+          setErrorMsg(e);
+        } else if (e instanceof Error) {
+          setErrorMsg(e.message);
+        }
+      }
+
+    } else {
+      setShowError(true);
+      setErrorMsg("Invalid deposit value");
     }
   }
 
-  const handleCloseModal = () => {
-    if (executeDeposit) {
-      SetErrorMsg("Cannot close modal during transaction.");
-      SetShowError(true);
+  const handleCloseModal = (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
+    if (executeDeposit?.length && !isError) {
+      setErrorMsg("Cannot close modal during transaction.");
+      setShowError(true);
     } else {
       setDepositValueInt("0");
+      setShowError(false);
       setShowDepositModal(false)
     }
   }
@@ -68,7 +93,7 @@ const DepositModal = ({
         show={showDepositModal}
         size="md"
         popup
-        
+
         onClose={handleCloseModal}
         initialFocus={amountInputRef}
 
@@ -80,7 +105,7 @@ const DepositModal = ({
             errorMsg={errorMsg}
           />
           <div >
-           
+
             {
               !depositLoading &&
               <form
@@ -103,27 +128,28 @@ const DepositModal = ({
                       ref={amountInputRef}
                       value={depositValueInt}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setDepositValueInt(e.target.value) }}
-
+                      max = {balance}
                       min="0"
                       step="any"
 
                     />
                     <Button
                       color="warning"
-                      className="ml-2 w-1/4 p-1">
+                      className="ml-2 w-1/4 p-1"
+                      onClick={()=>{
+                        const val = parseFloat(balance) * 0.99;
+                        setDepositValueInt(val.toString());
+                      }}>
                       Max</Button>
                   </div>
                 </div>
+                <p className="font-bold mt-1 text-center"> Max will leave 1% of account balance for gas.</p>
                 <Button
                   color="success"
-                  className="w-full p-1"
+                  className="w-full p-1 mt-3"
                   onClick={handleSubmit}> Deposit</Button>
-                <Button color="failure" className="w-full p-1 mt-2" onClick={(e: React.FormEvent<HTMLFormElement>) => {
-                  e.preventDefault();
-                  setDepositValueInt("0");
-                  setShowDepositModal(false)
-                }}> Cancel</Button>
-                <p className="font-bold mt-1 text-center"> Max will 99.99% of Wallet balance to leave some eth for gas.</p>
+                <Button color="failure" className="w-full p-1 mt-2" onClick={handleCloseModal}> Cancel</Button>
+               
               </form>
             }
             {depositLoading &&

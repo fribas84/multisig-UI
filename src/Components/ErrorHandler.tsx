@@ -1,6 +1,6 @@
 interface Props {
     showError: boolean;
-    errorMsg: string;
+    errorMsg: string | undefined;
 }
 
 const ErrorHandler = ({ showError, errorMsg }: Props) => {
@@ -8,7 +8,7 @@ const ErrorHandler = ({ showError, errorMsg }: Props) => {
         <>
             {
                 showError &&
-                <div className="text-white text-center  font-bold p-3 mb-3 rounded-md bg-red-600">
+                <div className="text-white text-center  p-2 font-bold  mx-2 rounded-md bg-red-600 shadow-2xl">
                     <p>{errorMsg}</p>
                 </div>
             }

@@ -7,7 +7,7 @@ import Actions from "./Components/Actions";
 import {
 
   useAccount,
-
+  useBalance
 } from 'wagmi'
 import { useEffect, useState } from "react";
 import DepositModal from "./Components/DepositModal";
@@ -16,9 +16,12 @@ import WidthdrawModal from "./Components/WidthdrawModal";
 function App() {
   const { address } = useAccount();
   const { data: contractBalance } = useMultiSigWalletGetBalance({ watch: true });
-
   const [showDepositModal, setShowDepositModal] = useState<boolean | undefined>(false);
   const [showWidthdrawModal, setShowWithdrawModal] = useState<boolean | undefined>(false);
+  
+  const { data: balance } = useBalance({
+    address: address,
+  })
   
   return (
     <Flowbite>
@@ -36,8 +39,7 @@ function App() {
             <DepositModal
               setShowDepositModal={setShowDepositModal}
               showDepositModal={showDepositModal}
-             
-
+              balance = { (typeof balance === 'undefined') ? "0" : balance.formatted}
             />
             <WidthdrawModal
               setShowWithdrawModal={setShowWithdrawModal}
