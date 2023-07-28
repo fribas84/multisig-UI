@@ -34,7 +34,7 @@ const Actions = ({
                 className="mx-2 hover:scale-110"
                 onClick={() => setShowWithdrawModal(true)}
             >
-                Create Order
+                Create Withdraw Order
             </Button>
             {contractBalance?.toString() &&
                 <span className="ml-auto my-auto flex-row-reverse dark:text-white">

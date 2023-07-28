@@ -25,9 +25,7 @@ const DepositModal = ({
   const [errorMsg, setErrorMsg] = useState<string | undefined>("");
   const { config: depositConfig } = usePrepareMultiSigWalletDeposit({ value: parseEther(depositValueInt) });
   const { data: returnDeposit, writeAsync: executeDeposit, error, isError } = useMultiSigWalletDeposit(depositConfig);
-  const { isLoading: depositLoading, isSuccess: depositSuccess } = useWaitForTransaction({ hash: returnDeposit?.hash });
-
-
+  const { isLoading: depositLoading, isSuccess: depositSuccess } = useWaitForTransaction({ hash: returnDeposit?.hash })
 
   useEffect(() => {
     const clear = () => {
@@ -40,7 +38,6 @@ const DepositModal = ({
     }
     clear();
   }, [depositSuccess]);
-
 
   useEffect(() => {
     const errorTx = () => {
@@ -55,11 +52,11 @@ const DepositModal = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const value = parseEther(depositValueInt);
-    if ((value > 0) && parseInt(balance)<value) {
+    const bal =  parseEther(balance)
+    if ((value > 0) && bal > value) {
       try {
         setShowError(false);
         await executeDeposit?.();
-
       }
       catch (e) {
         setShowError(true);
@@ -69,7 +66,6 @@ const DepositModal = ({
           setErrorMsg(e.message);
         }
       }
-
     } else {
       setShowError(true);
       setErrorMsg("Invalid deposit value");
@@ -93,12 +89,10 @@ const DepositModal = ({
         show={showDepositModal}
         size="md"
         popup
-
         onClose={handleCloseModal}
         initialFocus={amountInputRef}
-
       >
-        <Modal.Header > Deposit Eth </Modal.Header>
+        <Modal.Header ><span className='mx-2'>Deposit Eth</span></Modal.Header>
         <Modal.Body>
           <ErrorHandler
             showError={showError}
@@ -128,7 +122,6 @@ const DepositModal = ({
                       ref={amountInputRef}
                       value={depositValueInt}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setDepositValueInt(e.target.value) }}
-                      max = {balance}
                       min="0"
                       step="any"
 
