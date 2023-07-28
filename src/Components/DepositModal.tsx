@@ -64,12 +64,12 @@ return (
         setShowDepositModal(false)
       }}
       initialFocus={amountInputRef}
-      dismissible
+      
     >
       <Modal.Header />
       <Modal.Body>
         <div >
-          <h2 className="font-black text-3xl text-center mb-1">
+          <h2 className="font-black text-3xl text-center mb-1 dark:text-white">
             Deposit Eth
           </h2>
 
@@ -119,13 +119,15 @@ return (
             </form>
           }
           {depositLoading &&
-            <div className='flex'>
+            <div className='flex flex-col text-center '>
               <Spinner
                 aria-label="Transaction in progress"
                 size="xl"
+                className='my-2'
               />
-              <p>Transaction in progress...</p>
-              <a href={`https://etherscan.io/tx/${returnDeposit?.hash}`}>Etherscan</a>
+              <p className="text-black dark:text-white">Transaction in progress, you can validate it on: </p>
+              <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline" 
+              href={`https://etherscan.io/tx/${returnDeposit?.hash}`}>Etherscan</a>
             </div>
           }
         </div>
@@ -135,22 +137,5 @@ return (
   </>
 )
 }
-
-// <button disabled={!write || isLoading} onClick={() => write?.()}>
-// {isLoading ? 'Minting...' : 'Mint'}
-// </button>
-// {isSuccess && (
-// <div>
-//   Successfully minted your NFT!
-//   <div>
-//     <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
-//   </div>
-// </div>
-// )}
-// {(isPrepareError || isError) && (
-// <div>Error: {(prepareError || error)?.message}</div>
-// )}
-// </div>
-
 
 export default DepositModal;

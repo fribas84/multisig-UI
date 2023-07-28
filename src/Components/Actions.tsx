@@ -12,7 +12,8 @@ interface Props {
 }
 
 
-const Actions = ({ setShowDepositModal,
+const Actions = ({ 
+    setShowDepositModal,
     showDepositModal,
     setShowWithdrawModal,
     showWidthdrawModal,
