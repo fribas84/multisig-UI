@@ -1,8 +1,11 @@
 'use client';
 
 import { Table, Badge, Button } from 'flowbite-react';
+import { useMultiSigWalletGetWithdrawRequest } from '../generated';
 
-export default function Withdraws() {
+ const Withdraws = ()=> {
+
+  // const {data } = useMultiSigWalletGetWithdrawRequest();
   return (
     <Table hoverable className='shadow-2xl' >
       <Table.Head>
@@ -90,3 +93,5 @@ export default function Withdraws() {
     </Table>
   )
 }
+
+export default Withdraws
