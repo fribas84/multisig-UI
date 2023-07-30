@@ -12,6 +12,7 @@ import {
   hardhat
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
+import { Flowbite } from 'flowbite-react';
 
 const { chains, publicClient } = configureChains(
   [hardhat],
@@ -36,7 +37,9 @@ const wagmiConfig = createConfig({
 ReactDOM.createRoot(document.getElementById('root')!).render(
 <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
+      <Flowbite>
         <App />
+      </Flowbite>
       </RainbowKitProvider>
     </WagmiConfig>
 )
