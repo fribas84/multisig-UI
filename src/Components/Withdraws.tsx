@@ -1,6 +1,6 @@
 'use client';
 
-import { Table} from 'flowbite-react';
+import { Table } from 'flowbite-react';
 import { useMultiSigWalletGetWithdrawRequest } from '../generated';
 import WithdrawTable from './WithdrawTable';
 
@@ -8,7 +8,7 @@ import WithdrawTable from './WithdrawTable';
 
 const Withdraws = () => {
 
-  const { data } = useMultiSigWalletGetWithdrawRequest({watch:true});
+  const { data } = useMultiSigWalletGetWithdrawRequest({ watch: true });
   if (data != undefined) {
     return (
       <>
@@ -19,7 +19,6 @@ const Withdraws = () => {
               <Table.HeadCell>
                 Widthdraw Id
               </Table.HeadCell>
-
               <Table.HeadCell>
                 Destination
               </Table.HeadCell>
@@ -32,11 +31,8 @@ const Withdraws = () => {
               <Table.HeadCell>
                 Status
               </Table.HeadCell>
-
               <Table.HeadCell>
-
                 Actions
-
               </Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">

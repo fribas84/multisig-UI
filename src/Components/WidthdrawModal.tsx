@@ -31,13 +31,12 @@ const WidthdrawModal = ({ setShowWithdrawModal, showWidthdrawModal, contractBala
     const ethereumAddressRegex = /^(0x)?[0-9a-fA-F]{40}$/
 
     const clearAndClose = () => {
-
         setWithdrawAmount("0");
         setShowError(false);
         setErrorMsg("");
         setShowWithdrawModal(false);
-
     }
+
     useEffect(() => {
         if (isSuccess) {
             clearAndClose();
@@ -59,15 +58,15 @@ const WidthdrawModal = ({ setShowWithdrawModal, showWidthdrawModal, contractBala
         try {
             setShowError(false);
             await writeAsync?.();
-          }
-          catch (e) {
+        }
+        catch (e) {
             setShowError(true);
             if (typeof e === "string") {
-              setErrorMsg(e);
+                setErrorMsg(e);
             } else if (e instanceof Error) {
-              setErrorMsg(e.message);
+                setErrorMsg(e.message);
             }
-          }
+        }
     }
 
     const handleCloseModal = (e?: React.FormEvent<HTMLFormElement>) => {
@@ -79,8 +78,6 @@ const WidthdrawModal = ({ setShowWithdrawModal, showWidthdrawModal, contractBala
             clearAndClose();
         }
     }
-
-  
 
     const handleUpdateAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
         const addr: string = e.target.value;

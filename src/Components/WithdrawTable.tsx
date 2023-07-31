@@ -7,8 +7,9 @@ interface Props  {
 }
 
 const WithdrawTable = ({index, withdraw}: Props) => {
-  return (
-
+   
+    return (
+        
         <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={index}>
                       <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                         {index}
@@ -24,12 +25,12 @@ const WithdrawTable = ({index, withdraw}: Props) => {
                       </Table.Cell>
 
                       <Table.Cell>
-                        <Badge color="success">
+                        <Badge color={withdraw.sent === true ? "success" : "warning"}>
                           {withdraw?.sent.toString()}
                         </Badge>
                       </Table.Cell>
                       <Table.Cell>
-                        <Button color="failure" className="hover:scale-110" disabled>
+                        <Button color="failure" className="hover:scale-110" disabled={withdraw?.sent}>
                           Sign
                         </Button>
                       </Table.Cell>
