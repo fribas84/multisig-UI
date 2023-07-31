@@ -3,10 +3,9 @@
 import { Button, Modal, Spinner } from 'flowbite-react';
 import { useEffect, useRef, useState } from 'react';
 import { parseEther } from 'viem';
-import { useSignTypedData, useWaitForTransaction } from 'wagmi';
-import { WriteContractResult } from 'wagmi/actions';
-import { useMultiSigWalletGetBalance, useMultiSigWalletDeposit, usePrepareMultiSigWalletDeposit } from '../generated';
+import { useMultiSigWalletDeposit, usePrepareMultiSigWalletDeposit } from '../generated';
 import ErrorHandler from './ErrorHandler'
+import { useWaitForTransaction } from 'wagmi';
 
 interface Props {
   setShowDepositModal: React.Dispatch<React.SetStateAction<boolean | undefined>>;
@@ -52,7 +51,7 @@ const DepositModal = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const value = parseEther(depositValueInt);
-    const bal =  parseEther(balance)
+    const bal = parseEther(balance)
     if ((value > 0) && bal > value) {
       try {
         setShowError(false);
@@ -129,7 +128,7 @@ const DepositModal = ({
                     <Button
                       color="warning"
                       className="ml-2 w-1/4 p-1"
-                      onClick={()=>{
+                      onClick={() => {
                         const val = parseFloat(balance) * 0.99;
                         setDepositValueInt(val.toString());
                       }}>
@@ -142,7 +141,7 @@ const DepositModal = ({
                   className="w-full p-1 mt-3"
                   onClick={handleSubmit}> Deposit</Button>
                 <Button color="failure" className="w-full p-1 mt-2" onClick={handleCloseModal}> Cancel</Button>
-               
+
               </form>
             }
             {depositLoading &&

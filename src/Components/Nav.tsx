@@ -29,7 +29,7 @@ const Nav = () => {
                 smallScreen: 'avatar',
                 largeScreen: 'full',
               }}
-              chainStatus="icon"
+              
               showBalance={{
                 smallScreen: false,
                 largeScreen: true,

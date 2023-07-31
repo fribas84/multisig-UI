@@ -35,11 +35,15 @@ const wagmiConfig = createConfig({
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-<WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>
+  <WagmiConfig config={wagmiConfig}>
+    <RainbowKitProvider
+      coolMode
+      showRecentTransactions={true}
+      chains={chains}
+      appInfo={{appName: 'MultiSig Wallet'}}>
       <Flowbite>
         <App />
       </Flowbite>
-      </RainbowKitProvider>
-    </WagmiConfig>
+    </RainbowKitProvider>
+  </WagmiConfig>
 )

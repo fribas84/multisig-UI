@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { DarkThemeToggle, Flowbite } from 'flowbite-react';
-import { useMultiSigWalletGetBalance, useMultiSigWalletDeposit, usePrepareMultiSigWalletDeposit } from './generated';
+import { 
+  useMultiSigWalletGetBalance,
+  useMultiSigWalletDeposit,
+  usePrepareMultiSigWalletDeposit
+  } from './generated';
 import Nav from "./Components/Nav";
 import Withdraws from "./Components/Withdraws"
 import Actions from "./Components/Actions";
@@ -23,6 +27,7 @@ function App() {
     address: address,
   })
 
+
   return (
 
     <div className='container mx-auto my-5'>
@@ -44,6 +49,8 @@ function App() {
           <WidthdrawModal
             setShowWithdrawModal={setShowWithdrawModal}
             showWidthdrawModal={showWidthdrawModal}
+            contractBalance={contractBalance}
+            address={address}
           />
         </>
         }

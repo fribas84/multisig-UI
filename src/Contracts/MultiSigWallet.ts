@@ -95,7 +95,7 @@ export const MultSigWalletAbi =  [
         "type": "uint256"
       }
     ],
-    "name": "CreatedWithdrawTx",
+    "name": "CreateWithdrawTx",
     "type": "event"
   },
   {
@@ -153,7 +153,7 @@ export const MultSigWalletAbi =  [
         "type": "uint256"
       }
     ],
-    "name": "createdWithdrawTx",
+    "name": "createWithdrawTx",
     "outputs": [
       {
         "internalType": "uint256",
