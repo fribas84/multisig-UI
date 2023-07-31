@@ -1,15 +1,10 @@
 'use client';
 
-import { Table, Badge, Button } from 'flowbite-react';
+import { Table} from 'flowbite-react';
 import { useMultiSigWalletGetWithdrawRequest } from '../generated';
-import { formatEther } from 'viem';
+import WithdrawTable from './WithdrawTable';
 
-interface IWithdraw {
-  to: `0x${string}`,
-  amount: bigint,
-  approvals: bigint,
-  sent: boolean
-}
+
 
 const Withdraws = () => {
 
@@ -46,35 +41,11 @@ const Withdraws = () => {
             </Table.Head>
             <Table.Body className="divide-y">
               {
-                data.map((withdraw: IWithdraw, index) => {
-                  return (
-                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                        {index}
-                      </Table.Cell>
-                      <Table.Cell>
-                        {withdraw?.to}
-                      </Table.Cell>
-                      <Table.Cell>
-                        {formatEther(withdraw.amount).toString()} eth
-                      </Table.Cell>
-                      <Table.Cell>
-                        {withdraw.approvals.toString()}
-                      </Table.Cell>
-
-                      <Table.Cell>
-                        <Badge color="success">
-                          {withdraw?.sent.toString()}
-                        </Badge>
-                      </Table.Cell>
-                      <Table.Cell>
-                        <Button color="failure" className="hover:scale-110" disabled>
-                          Sign
-                        </Button>
-                      </Table.Cell>
-                    </Table.Row>
-                  )
-                })
+                data.map((withdraw: IWithdraw, index) => (
+                  <WithdrawTable
+                    index={index}
+                    withdraw={withdraw} />
+                ))
               }
             </Table.Body>
           </Table>
