@@ -4,8 +4,6 @@ import { formatEther } from 'viem';
 interface Props  {
     index: number;
     withdraw : IWithdraw;
-
-
 }
 
 const WithdrawTable = ({index, withdraw}: Props) => {
@@ -36,8 +34,6 @@ const WithdrawTable = ({index, withdraw}: Props) => {
                         </Button>
                       </Table.Cell>
                     </Table.Row>
-
-
   )
 }
 
