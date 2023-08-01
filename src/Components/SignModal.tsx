@@ -3,6 +3,13 @@ import React from 'react'
 import { Button, Modal } from 'flowbite-react';
 import {FiAlertCircle} from 'react-icons/fi';
 import { formatEther } from 'viem';
+import ErrorHandler from './ErrorHandler';
+import { useEffect, useRef, useState } from 'react';
+import {
+    usePrepareMultiSigWalletApproveWithdrawTx,
+    useMultiSigWalletApproveWithdrawTx
+} from '../generated';
+import { useWaitForTransaction } from 'wagmi';
 
 interface Props  {
     id:number
@@ -38,7 +45,6 @@ const SignModal = ({id,withdraw,showSignModal,setShowSignModal}: Props) => {
           </div>
         </Modal.Body>
       </Modal>
-    
   )
 }
 
