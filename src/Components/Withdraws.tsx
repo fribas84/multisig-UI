@@ -39,6 +39,7 @@ const Withdraws = () => {
               {
                 data.map((withdraw: IWithdraw, index) => (
                   <WithdrawTable
+                  key={index}
                     index={index}
                     withdraw={withdraw} />
                 ))

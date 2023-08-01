@@ -1,23 +1,24 @@
 'use client';
 
 import { Button, Navbar } from 'flowbite-react';
-import { formatEther } from 'viem';
+import { formatEther, formatUnits, parseEther } from 'viem';
 
 interface Props {
     setShowDepositModal: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     showDepositModal: boolean | undefined;
     setShowWithdrawModal: React.Dispatch<React.SetStateAction<boolean | undefined>>;
-    showWidthdrawModal: boolean | undefined
-    contractBalance: bigint | undefined
+    showWidthdrawModal: boolean | undefined;
+    contractBalance: bigint | undefined;
+
 }
 
-
-const Actions = ({ 
+const Actions = ({
     setShowDepositModal,
     showDepositModal,
     setShowWithdrawModal,
     showWidthdrawModal,
-    contractBalance }: Props) => {
+    contractBalance,
+     }: Props) => {
     return (
         <Navbar className='flex mb-5 p-2 bg-white border-black-200 rounded-md shadow-2xl'>
 
@@ -41,6 +42,7 @@ const Actions = ({
                     Total Balance in Wallet: <span className='font-bold'>{formatEther(contractBalance).toString()} eth </span>
                 </span>
             }
+
 
         </Navbar>
     )

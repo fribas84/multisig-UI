@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { DarkThemeToggle, Flowbite } from 'flowbite-react';
-import { 
+import {
   useMultiSigWalletGetBalance,
   useMultiSigWalletDeposit,
   usePrepareMultiSigWalletDeposit
-  } from './generated';
+} from './generated';
 import Nav from "./Components/Nav";
 import Withdraws from "./Components/Withdraws"
 import Actions from "./Components/Actions";
@@ -25,6 +25,7 @@ function App() {
 
   const { data: balance } = useBalance({
     address: address,
+    watch: true
   })
 
 
@@ -39,7 +40,8 @@ function App() {
             showDepositModal={showDepositModal}
             setShowWithdrawModal={setShowWithdrawModal}
             showWidthdrawModal={showWidthdrawModal}
-            contractBalance={contractBalance} />
+            contractBalance={contractBalance}
+          />
           <Withdraws />
           <DepositModal
             setShowDepositModal={setShowDepositModal}
