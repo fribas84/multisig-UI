@@ -30,7 +30,7 @@ const WithdrawTable = ({index, withdraw}: Props) => {
                         </Badge>
                       </Table.Cell>
                       <Table.Cell>
-                        <Button color="failure" className="hover:scale-110" disabled={withdraw?.sent}>
+                        <Button className="hover:scale-110" disabled={withdraw?.sent}>
                           Sign
                         </Button>
                       </Table.Cell>
