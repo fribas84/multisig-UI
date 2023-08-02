@@ -29,7 +29,7 @@ const Withdraws = () => {
                 Signers
               </Table.HeadCell>
               <Table.HeadCell>
-                Status
+                Completed
               </Table.HeadCell>
               <Table.HeadCell>
                 Actions
